@@ -1,0 +1,65 @@
+version: '3.9'
+
+networks:
+  shared_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+  npm_data:
+  npm_letsencrypt:
+  portainer_data:
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Jb*nKBlSO831
+      POSTGRES_DB: admin_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - shared_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mpwt.org
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    networks:
+      - shared_net
+
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: always
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - npm_data:/data
+      - npm_letsencrypt:/etc/letsencrypt
+    networks:
+      - shared_net
+
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - shared_net
