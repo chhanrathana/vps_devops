@@ -6,6 +6,7 @@ networks:
 
 volumes:
   postgres_data:
+  hrm_postgres_data:  # ✅ Added missing volume declaration
   pgadmin_data:
   npm_data:
   npm_letsencrypt:
@@ -27,7 +28,7 @@ services:
 
   hrm_db:
     image: postgres:16
-    container_name: postgres
+    container_name: hrm_postgres  # 🛠️ Changed to unique container name
     restart: always
     environment:
       POSTGRES_USER: admin
@@ -47,6 +48,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@mpwt.org
       PGADMIN_DEFAULT_PASSWORD: cbO5)\H_X62l
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin  # 🛠️ Added missing volume mount
     networks:
       - shared_net
 
