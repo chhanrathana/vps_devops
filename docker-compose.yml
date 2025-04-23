@@ -25,6 +25,19 @@ services:
     networks:
       - shared_net
 
+  hrm_db:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Jb*nKBlSO831
+      POSTGRES_DB: hrm_db
+    volumes:
+      - hrm_postgres_data:/var/lib/postgresql/hrm/data
+    networks:
+      - shared_net    
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -33,7 +46,7 @@ services:
       - "5050:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@mpwt.org
-      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_DEFAULT_PASSWORD: cbO5)\H_X62l
     networks:
       - shared_net
 
