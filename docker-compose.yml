@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: Jb*nKBlSO831
       POSTGRES_DB: hrm_db
     volumes:
-      - hrm_postgres_data:/var/lib/postgresql/hrm/data
+      - hrm_postgres_data:/var/lib/postgresql/data
     networks:
       - shared_net    
 
