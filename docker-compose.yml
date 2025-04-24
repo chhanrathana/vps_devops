@@ -4,41 +4,13 @@ networks:
   shared_net:
     driver: bridge
 
-volumes:
-  postgres_data:
-  hrm_postgres_data:  # ✅ Added missing volume declaration
+volumes:  # ✅ Added missing volume declaration
   pgadmin_data:
   npm_data:
   npm_letsencrypt:
   portainer_data:
 
 services:
-  postgres:
-    image: postgres:16
-    container_name: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: Jb*nKBlSO831
-      POSTGRES_DB: admin_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - shared_net
-
-  hrm_db:
-    image: postgres:16
-    container_name: hrm_postgres  # 🛠️ Changed to unique container name
-    restart: always
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: Jb*nKBlSO831
-      POSTGRES_DB: hrm_db
-    volumes:
-      - hrm_postgres_data:/var/lib/postgresql/data
-    networks:
-      - shared_net    
-
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
@@ -49,7 +21,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@mpwt.org
       PGADMIN_DEFAULT_PASSWORD: cbO5)\H_X62l
     volumes:
-      - pgadmin_data:/var/lib/pgadmin  # 🛠️ Added missing volume mount
+      - pgadmin_data:/var/lib/pgadmin
     networks:
       - shared_net
 
